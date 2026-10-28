@@ -6,7 +6,7 @@
 
 **适用对象：** 零编程基础的业务同事、使用 AI 开发工具的初学者、有软件开发经验的技术人员，以及负责指导项目的 AI 星火计划导师。
 
-**快速开始：** [了解 SDD](#什么是-sdd) · [安装 Skill](#安装) · [启动示例](#怎么启动)
+**快速开始：** [了解 SDD](#什么是-sdd) · [查看流程图](#典型使用过程) · [安装 Skill](#安装) · [启动示例](#怎么启动)
 
 ## 什么是 SDD
 
@@ -53,21 +53,41 @@
 
 ## 典型使用过程
 
-```text
-业务想法
-  ↓
-Discovery：首轮最多 4 问
-  ↓
-Clarification：必要时最多追问 3 问
-  ↓
-MVP 方案卡（用户可纠正）
-  ↓
-生成五份 SDD 文件
-  ↓
-开发就绪检查（Ready / Conditionally Ready / Blocked）
-  ↓
-从第一条任务启动 AI 辅助开发
+流程分为 **Skill 准备开发依据** 和 **后续开发与验收** 两段。项目原则 `constitution.md` 与 AI 工作规则 `AGENTS.md` 贯穿两个阶段。
+
+```mermaid
+flowchart TD
+    accTitle: AI 星火计划 SDD 工作流程
+    accDescr: 从业务想法出发，由 Skill 澄清需求并准备规格、方案和任务，交接后由 Coding Agent 开发并由参与者验收。实现有误时修正代码，需求变化时同步文档。
+
+    idea["业务想法<br/>例如：Excel → 技术方案"]
+
+    subgraph preparation["① 本 Skill：准备开发依据"]
+        discover["澄清需求，确定 MVP<br/>谁来用 · 输入输出 · 第一版范围"]
+        spec["spec.md：需求与验收<br/>做什么 · 怎样判断结果正确"]
+        planTasks["plan.md + tasks.md<br/>实现方案 · 分步任务 · 完成条件"]
+        discover --> spec --> planTasks
+    end
+
+    subgraph development["② 后续工作：开发与验收"]
+        implement["Coding Agent 按任务开发<br/>运行样本与测试"]
+        acceptance{"对照 spec.md<br/>业务验收是否通过？"}
+        deliver["交付第一版 MVP<br/>完整业务闭环可运行、可演示"]
+        implement --> acceptance
+        acceptance -->|通过| deliver
+        acceptance -->|实现有误：修正代码| implement
+    end
+
+    idea --> discover
+    planTasks -->|开工条件清楚后交接| implement
+    acceptance -->|需求变更：同步规格、方案和任务| spec
 ```
+
+需求访谈首轮最多 4 问，必要时最多追问 3 问。交接前给出 **Ready / Conditionally Ready / Blocked** 状态及原因：阻断首次业务闭环的未知项先补齐，非阻断假设明确标注。
+
+验收发现实现偏差时，按既定规格修正代码；业务需求变化时，先与参与者确认，再同步规格、方案、任务及相关实现。交付后的新需求也按这条路径进入下一轮。
+
+[查看或下载可编辑的流程图源码](docs/diagrams/sdd-workflow.mmd)。
 
 ## 仓库结构
 
@@ -77,6 +97,8 @@ ai-spark-sdd-skill/
 ├── README.md
 ├── LICENSE
 ├── docs/
+│   ├── diagrams/
+│   │   └── sdd-workflow.mmd         # 可编辑的 SDD 流程图源码
 │   └── images/
 │       └── sdd-in-ai-projects.jpg   # SDD 在 AI 项目中的流程说明图
 └── skills/
