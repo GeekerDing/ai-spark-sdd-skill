@@ -6,6 +6,40 @@
 
 **适用对象：** 零编程基础的业务同事、使用 AI 开发工具的初学者、有软件开发经验的技术人员，以及负责指导项目的 AI 星火计划导师。
 
+**快速开始：** [了解 SDD](#什么是-sdd) · [安装 Skill](#安装) · [启动示例](#怎么启动)
+
+## 什么是 SDD
+
+**SDD（Spec-Driven Development，规格驱动开发）**是一种用明确的需求规格指导设计、开发、测试和迭代的工作方式。先说明要解决的业务问题、输入输出、第一版范围，以及怎样判断结果正确，再据此制定方案并拆解任务。需求变化时，同步维护规格、方案、任务和验收用例。
+
+你可以把 SDD 理解为项目的**“施工图＋验收单”**。在 AI 辅助开发中，它让参与者和 AI 使用同一份项目依据：减少需求猜测，控制第一版范围，保留可以继续读取的项目上下文，并按明确标准检查交付结果。
+
+### 一张图看懂：从想法到交付
+
+[![SDD 在 AI 项目中的用处：澄清需求、定义目标与范围、编写文档、AI 开发、验收与迭代，最终交付可运行的应用](docs/images/sdd-in-ai-projects.jpg)](docs/images/sdd-in-ai-projects.jpg)
+
+点击图片可查看原尺寸。图示展示完整项目过程；图中提到的数据测试，应优先使用模拟或已获授权的脱敏样本。是否部署、部署到哪里，按实际项目要求确定。
+
+### 五份文件分别做什么？
+
+下面是本 Skill 采用的轻量文档约定，可根据项目规模和使用的工具调整。
+
+| 文件 | 回答的问题 | 主要内容 |
+| --- | --- | --- |
+| `spec.md` | 做什么，怎样算做对？ | 业务需求、输入输出、MVP 范围、业务规则与验收标准 |
+| `plan.md` | 用什么方法实现？ | 技术方案、模块与数据流程、关键取舍及验证方法 |
+| `tasks.md` | 先做哪一步，每步怎样完成？ | 可执行任务、关联需求、依赖顺序与完成条件 |
+| `constitution.md` | 项目遵守哪些原则？ | 简单可维护、数据保护、规格可追踪等项目原则 |
+| `AGENTS.md` | Coding Agent 怎样在项目中工作？ | 阅读规格的顺序、修改范围、运行检查和汇报规则 |
+
+例如，“想让 AI 自动生成周报”可以先收敛为：**第一版只读取一种固定格式的 Excel，按项目汇总进展与风险，输出约定格式的 Markdown 周报；缺少必填列时明确提示，使用模拟样本对照预期内容验收。** 随后把读取、校验、汇总、导出和验收拆成可以逐项完成的任务。
+
+### 这个 Skill 在其中负责什么？
+
+`ai-spark-sdd` 是这套工作方式的入门向导，默认负责**澄清业务需求 → 确定 MVP → 生成五份文档 → 检查是否具备开工条件**，并给出第一条开发任务和启动指令。参与者确认方向后，再由 Coding Agent 在业务项目中逐项实现、运行和验证。
+
+图中的开发、部署与最终验收需要在后续项目工作中继续完成。应用是否可用，以实际运行、测试结果和业务人员的验收为依据；规格也应随项目反馈持续更新。
+
 ## 能做到什么？
 
 - **少量问题**：第一轮最多 4 问，必要时第二轮最多追问 3 问；已有信息不重复问。
@@ -42,6 +76,9 @@ ai-spark-sdd-skill/
 ├── .gitignore
 ├── README.md
 ├── LICENSE
+├── docs/
+│   └── images/
+│       └── sdd-in-ai-projects.jpg   # SDD 在 AI 项目中的流程说明图
 └── skills/
     └── ai-spark-sdd/
         ├── SKILL.md                   # Skill 入口：触发、工作流、行为约束
@@ -169,11 +206,11 @@ cp -R /path/to/ai-spark-sdd-skill/skills/ai-spark-sdd/. ~/.claude/skills/ai-spar
 
 GitHub 新建仓库入口：<https://github.com/new>
 
-## 参考标准
+## 参考资料与标准
 
 - [Agent Skills specification](https://agentskills.io/specification)
 - [Codex Skills 文档](https://learn.chatgpt.com/docs/build-skills)
-- [GitHub Spec Kit](https://github.com/github/spec-kit)
+- [GitHub Spec Kit：SDD 工作方式](https://github.com/github/spec-kit#spec-driven-development)
 
 ## 许可
 
